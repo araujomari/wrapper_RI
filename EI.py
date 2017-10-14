@@ -66,43 +66,43 @@ class EI(object):
         for content in self._Volkswagen:
             if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
-                    v_marca = content.lower()            
+                    v_marca = content.lower()
 
         for content in self._Hyundai:
             if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
-                    v_marca = content.lower()  
-        
+                    v_marca = content.lower()
+
         for content in self._Chevrolet:
             if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
-                    v_marca = content.lower()  
+                    v_marca = content.lower()
 
         for content in self._Fiat:
             if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
-                    v_marca = content.lower()  
+                    v_marca = content.lower()
 
         for content in self._Honda:
             if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
-                    v_marca = content.lower()  
+                    v_marca = content.lower()
 
         for content in self._Nissan:
             if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
-                    v_marca = content.lower()  
+                    v_marca = content.lower()
 
         for content in self._Toyota:
             if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
-                    v_marca = content.lower()              
+                    v_marca = content.lower()
 
         for content in self._Renault:
             if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
-                    v_marca = content.lower() 
-                    
+                    v_marca = content.lower()
+
         for opcionais in data:
             for content in self._OPICIONAIS:
                 if content != '' and content.lower() == opcionais.lower():
@@ -130,11 +130,25 @@ class EI(object):
                 if content != '' and content.lower() == ar.lower():
                     v_ar = 'sim'
 
-        self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor)
+        self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca,marcas[0].lower())
 
 
-    def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca):
+    def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca, modelo):
         template = OpenFiles("Swats/tarefa", self.date).generateFile()
+
+        if marca != '':
+            template.write("Marca: " + marca)
+            template.write("\n")
+        else:
+            template.write("Marca: N/I")
+            template.write("\n")
+
+        if modelo != '':
+            template.write("Modelo: " + modelo)
+            template.write("\n")
+        else:
+            template.write("Modelo: N/I")
+            template.write("\n")
 
         if combustivel != '':
             template.write("Combustivel: " + combustivel)
@@ -175,12 +189,7 @@ class EI(object):
         else:
             template.write("Opcionais: N/I")
 
-        if marca != '':
-            template.write("Marca: " + marca)
-            template.write("\n")
-        else:
-            template.write("Marca: N/I")
-            template.write("\n")
+
 
     def get_page(self, url):
         htmlfile = requests.get(url)
@@ -193,7 +202,7 @@ class EI(object):
         preco = parsed_html.body.find('h4', class_='preco-produto-sidebar')
         caracteristicas = parsed_html.body.find_all('li', class_='listagem-mais-detalhes-do-produto-item')
         info_adicional = parsed_html.body.find_all('p')
-
+        return content
 
 class OpenFiles(object):
 
@@ -211,6 +220,7 @@ class OpenFiles(object):
 
 
 if __name__ == "__main__":
-        h = w.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/563/hondacity20")
-        EI().parser(h)
-
+        e = EI()
+        h = e.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/563/hondacity20")
+        content  = e.parser(h)
+        e.classify(content,"branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
