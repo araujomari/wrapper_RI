@@ -9,11 +9,11 @@ class EI(object):
 
     def __init__(self):
         self._OPICIONAIS = ['radio','CD', 'MP3 Player','MP3','alarme', 'airbag','dir.e','rodas liga','rodas liga leve','liga leve', 'vid'
-            ,'sensor de r�','sensor de estacionamento', 'revestimento fum�', 'bancos de couro',
-                            'Retrovisores el�tricos', 'volante com regulagem de altura']
-        self._COMBUSTIVEL = ['g�s', 'gasolina', 'alcool', 'flex', 'total flex']
+            ,'sensor de ré','sensor de estacionamento', 'revestimento fumê', 'bancos de couro',
+                            'Retrovisores elétricos', 'volante com regulagem de altura']
+        self._COMBUSTIVEL = ['gás', 'gasolina', 'alcool', 'flex', 'total flex']
 
-        self.FORD = ['focus', 'new fiesta', 'fiesta se', 'ka']
+        self._FORD = ['focus', 'new fiesta', 'fiesta se', 'ka']
 
         self._Volkswagen = ['gol','fox', 'crossfox', 'voyage']
 
@@ -31,9 +31,9 @@ class EI(object):
 
         self._Renault = ['duster']
 
-        self._DIRECAO = ['hidraulica', 'dire��o hidraulica', 'hla', 'dire��o el�trica', 'el�trica']
+        self._DIRECAO = ['hidraulica', 'direção hidraulica', 'hla', 'direção elétrica', 'elétrica']
 
-        self._CAMBIO = ['Manual', 'autom�tico', 'autom�tica']
+        self._CAMBIO = ['Manual', 'automático', 'automática']
 
         self._COR = ['branco','preto', 'prata', 'azul', 'marrom', 'vermelho', 'amarelo', 'cinza']
 
@@ -42,7 +42,9 @@ class EI(object):
         self.date = time.strftime("%d-%m-%Y")
 
 
-    def classify(self, text):
+    def classify(self, content, text):
+
+        marcas = content.split(" ")
         data = text.split(';')
         tamanho = len(data)
         content_op = data[tamanho - 1]
@@ -52,8 +54,55 @@ class EI(object):
         v_direcao = ''
         v_cambio = ''
         v_cor = ''
-        v_ar = 'n�o'
+        v_ar = 'não'
+        v_marca = ''
 
+
+        for content in self._FORD:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower()
+
+        for content in self._Volkswagen:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower()            
+
+        for content in self._Hyundai:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower()  
+        
+        for content in self._Chevrolet:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower()  
+
+        for content in self._Fiat:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower()  
+
+        for content in self._Honda:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower()  
+
+        for content in self._Nissan:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower()  
+
+        for content in self._Toyota:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower()              
+
+        for content in self._Renault:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_marca:
+                    v_marca = content.lower() 
+                    
         for opcionais in data:
             for content in self._OPICIONAIS:
                 if content != '' and content.lower() == opcionais.lower():
@@ -102,10 +151,10 @@ class EI(object):
             template.write("\n")
 
         if direcao != '':
-            template.write("Dire��o: " + direcao)
+            template.write("Direção: " + direcao)
             template.write("\n")
         else:
-            template.write("Dire��o: N/I")
+            template.write("Direção: N/I")
             template.write("\n")
 
         if cor != '':
@@ -139,8 +188,6 @@ class EI(object):
         info_adicional = parsed_html.body.find_all('p')
 
 
-
-
 class OpenFiles(object):
 
     def __init__(self, name=None, date=None):
@@ -157,4 +204,4 @@ class OpenFiles(object):
 
 
 if __name__ == "__main__":
-    EI().classify("branco,flex, hatch, completo,sensor de r�, 4 pneus novos, 76.000 kms. R$ 35.900,00")
+    EI().classify("branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
