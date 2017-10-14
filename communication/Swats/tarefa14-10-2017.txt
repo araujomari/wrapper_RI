@@ -1,0 +1,106 @@
+
+
+Preenchimento do Template(14-10-2017):
+
+Marca: honda
+Modelo: city
+Preco: N/I
+Motor: N/I
+Ano: N/I
+KM: N/I
+Combustivel: N/I
+Cambio: N/I
+Direção: N/I
+Cor: N/I
+Ar: não
+Opcionais: N/I
+
+Preenchimento do Template(14-10-2017):
+
+Marca: honda
+Modelo: city
+Preco: N/I
+Motor: N/I
+Ano: N/I
+KM: N/I
+Combustivel: N/I
+Cambio: N/I
+Direção: N/I
+Cor: N/I
+Ar: não
+Opcionais: N/I
+
+Preenchimento do Template(14-10-2017):
+
+Marca: ka
+Modelo: 1.0
+Preco: N/I
+Motor: N/I
+Ano: N/I
+KM: N/I
+Combustivel: N/I
+Cambio: N/I
+Direção: N/I
+Cor: N/I
+Ar: não
+Opcionais: N/I
+
+Preenchimento do Template(14-10-2017):
+
+Marca: ka
+Modelo: 1.0
+Preco: N/I
+Motor: N/I
+Ano: N/I
+KM: N/I
+Combustivel: N/I
+Cambio: N/I
+Direção: N/I
+Cor: N/I
+Ar: não
+Opcionais: N/I
+
+Preenchimento do Template(14-10-2017):
+
+Marca: voyage
+Modelo: 2010
+Preco: N/I
+Motor: N/I
+Ano: N/I
+KM: N/I
+Combustivel: N/I
+Cambio: N/I
+Direção: N/I
+Cor: N/I
+Ar: não
+Opcionais: N/I
+
+Preenchimento do Template(14-10-2017):
+
+Marca: palio
+Modelo: attractive
+Preco: N/I
+Motor: N/I
+Ano: N/I
+KM: N/I
+Combustivel: N/I
+Cambio: N/I
+Direção: N/I
+Cor: N/I
+Ar: não
+Opcionais: N/I
+
+Preenchimento do Template(14-10-2017):
+
+Marca: voyage
+Modelo: 2010
+Preco: N/I
+Motor: N/I
+Ano: N/I
+KM: N/I
+Combustivel: N/I
+Cambio: N/I
+Direção: N/I
+Cor: N/I
+Ar: não
+Opcionais: N/I

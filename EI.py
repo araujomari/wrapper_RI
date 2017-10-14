@@ -39,6 +39,14 @@ class EI(object):
 
         self._AR = ['ar', 'ar_condi', 'ar_condicionado']
 
+        self._KM = []
+
+        self._ANO = []
+
+        self._MOTOR = []
+
+        self._PRECO = []
+
         self.date = time.strftime("%d-%m-%Y")
 
 
@@ -56,6 +64,10 @@ class EI(object):
         v_cor = ''
         v_ar = 'não'
         v_marca = ''
+        v_motor = ''
+        v_preco = '' 
+        v_ano = ''
+        v_km = ''
 
 
         for content in self._FORD:
@@ -119,22 +131,36 @@ class EI(object):
                 if content != '' and content.lower() == direcao.lower():
                     v_direcao = content.lower()
 
-
         for cor in data:
             for content in self._COR:
                 if content != '' and content.lower() == cor.lower():
                     v_cor = content.lower()
 
-        for ar in data:
-            for content in self._AR:
-                if content != '' and content.lower() == ar.lower():
-                    v_ar = 'sim'
+        for motor in data:
+            for content in self._MOTOR:
+                if content != '' and content.lower() == motor.lower():
+                    v_motor = content.lower()
 
-        model = ''            
+        for preco in data:
+            for content in self._PRECO:
+                if content != '' and content.lower() == preco.lower():
+                    v_preco = content.lower()
+		
+		for ano in data:
+		    for content in self._ANO:
+		        if content != '' and content.lower() == ano.lower():
+		            v_ano = content.lower()
+		
+		for km in data:
+		    for content in self._KM:
+		        if content != '' and content.lower() == km.lower():
+		            v_km = content.lower()
+
+        v_model = ''            
         if v_marca.lower() == marcas[0].lower():
-            model = marcas[1].lower()
+            v_model = marcas[1].lower()
 
-        self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca,model)
+        self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca, v_model, v_motor, v_preco, v_ano, v_km)
 
 
     def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca, modelo, motor, preco, ano, km):
@@ -266,7 +292,7 @@ class OpenFiles(object):
 
 if __name__ == "__main__":
         e = EI()
-        h = e.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/563/hondacity20")
+        h = e.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/514/")
         content = e.parser(h)
         e.classify(content[0],"branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
         print content[0]
