@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 import time
 import requests
@@ -13,7 +13,7 @@ class EI(object):
                             'Retrovisores elétricos', 'volante com regulagem de altura']
         self._COMBUSTIVEL = ['gás', 'gasolina', 'alcool', 'flex', 'total flex']
 
-        self._FORD = ['focus', 'new fiesta', 'fiesta se', 'ka']
+        self._FORD = ['focus', 'new fiesta', 'new', 'fiesta', 'fiesta se', 'ka']
 
         self._Volkswagen = ['gol','fox', 'crossfox', 'voyage']
 
