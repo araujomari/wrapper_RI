@@ -13,6 +13,8 @@ class EI(object):
                             'Retrovisores elétricos', 'volante com regulagem de altura']
         self._COMBUSTIVEL = ['gás', 'gasolina', 'alcool', 'flex', 'total flex']
 
+        self._MODELS = ['ford','volkswagen','hyundai','chevrolet','fiat','honda','nissan','toyota','renault']
+
         self._FORD = ['focus', 'new fiesta', 'new', 'fiesta', 'fiesta se', 'ka', 'ford']
 
         self._Volkswagen = ['gol','fox', 'crossfox', 'voyage', 'volkswagen']
@@ -157,8 +159,46 @@ class EI(object):
 		            v_km = content.lower()
 
         v_model = ''            
-        if v_marca.lower() == marcas[0].lower():
-            v_model = marcas[1].lower()
+        for content in self._MODELS:
+	        if v_marca.lower() == content.lower():
+	            v_model = marcas[1].lower()
+	        else:
+	        	for item in self._Fiat:
+	        		if v_marca.lower() == item.lower():
+	        			v_model = 'fiat'
+	        			
+	        	for item in self._FORD:
+	        		if v_marca.lower() == item.lower():
+	        			v_model = 'ford'
+	        
+		        for item in self._Honda:
+		        		if v_marca.lower() == item.lower():
+		        			v_model = 'honda'
+		    
+		        for item in self._Hyundai:
+		        		if v_marca.lower() == item.lower():
+		        			v_model = 'hyundai'
+		    
+		        for item in self._Chevrolet:
+		        		if v_marca.lower() == item.lower():
+		        			v_model = 'chevrolet'
+		    
+		        for item in self._Volkswagen:
+		        		if v_marca.lower() == item.lower():
+		        			v_model = 'volkswagen'
+		    
+		        for item in self._Toyota:
+		        		if v_marca.lower() == item.lower():
+		        			v_model = 'toyota'
+		    
+		        for item in self._Nissan:
+		        		if v_marca.lower() == item.lower():
+		        			v_model = 'nissan'
+		    
+		        for item in self._Renault:
+		        		if v_marca.lower() == item.lower():
+		        			v_model = 'renault'
+
 
         self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca, v_model, v_motor, v_preco, v_ano, v_km)
 
