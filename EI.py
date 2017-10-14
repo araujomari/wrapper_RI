@@ -163,41 +163,43 @@ class EI(object):
 	        if v_marca.lower() == content.lower():
 	            v_model = marcas[1].lower()
 	        else:
+	        	v_model = marcas[0].lower()
+	        	
 	        	for item in self._Fiat:
 	        		if v_marca.lower() == item.lower():
-	        			v_model = 'fiat'
+	        			v_marca = 'fiat'
 	        			
 	        	for item in self._FORD:
 	        		if v_marca.lower() == item.lower():
-	        			v_model = 'ford'
+	        			v_marca = 'ford'
 	        
 		        for item in self._Honda:
 		        		if v_marca.lower() == item.lower():
-		        			v_model = 'honda'
+		        			v_marca = 'honda'
 		    
 		        for item in self._Hyundai:
 		        		if v_marca.lower() == item.lower():
-		        			v_model = 'hyundai'
+		        			v_marca = 'hyundai'
 		    
 		        for item in self._Chevrolet:
 		        		if v_marca.lower() == item.lower():
-		        			v_model = 'chevrolet'
+		        			v_marca = 'chevrolet'
 		    
 		        for item in self._Volkswagen:
 		        		if v_marca.lower() == item.lower():
-		        			v_model = 'volkswagen'
+		        			v_marca = 'volkswagen'
 		    
 		        for item in self._Toyota:
 		        		if v_marca.lower() == item.lower():
-		        			v_model = 'toyota'
+		        			v_marca = 'toyota'
 		    
 		        for item in self._Nissan:
 		        		if v_marca.lower() == item.lower():
-		        			v_model = 'nissan'
+		        			v_marca = 'nissan'
 		    
 		        for item in self._Renault:
 		        		if v_marca.lower() == item.lower():
-		        			v_model = 'renault'
+		        			v_marca = 'renault'
 
 
         self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca, v_model, v_motor, v_preco, v_ano, v_km)
