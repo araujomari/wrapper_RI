@@ -13,23 +13,23 @@ class EI(object):
                             'Retrovisores elétricos', 'volante com regulagem de altura']
         self._COMBUSTIVEL = ['gás', 'gasolina', 'alcool', 'flex', 'total flex']
 
-        self._FORD = ['focus', 'new fiesta', 'new', 'fiesta', 'fiesta se', 'ka']
+        self._FORD = ['focus', 'new fiesta', 'new', 'fiesta', 'fiesta se', 'ka', 'ford']
 
-        self._Volkswagen = ['gol','fox', 'crossfox', 'voyage']
+        self._Volkswagen = ['gol','fox', 'crossfox', 'voyage', 'volkswagen']
 
-        self._Hyundai = ['hb20']
+        self._Hyundai = ['hb20', 'hyundai']
 
-        self._Chevrolet = ['montana', 'agile']
+        self._Chevrolet = ['montana', 'agile', 'chevrolet']
 
-        self._Fiat = ['strada', 'palio','siena', 'idea', 'uno']
+        self._Fiat = ['strada', 'palio','siena', 'idea', 'uno', 'fiat']
 
-        self._Honda = ['civic', 'city']
+        self._Honda = ['civic', 'city', 'honda']
 
-        self._Nissan = ['versa']
+        self._Nissan = ['versa', 'nissan']
 
-        self._Toyota = ['corola']
+        self._Toyota = ['corola', 'toyota']
 
-        self._Renault = ['duster']
+        self._Renault = ['duster', 'renault']
 
         self._DIRECAO = ['hidraulica', 'direção hidraulica', 'hla', 'direção elétrica', 'elétrica']
 
@@ -133,7 +133,7 @@ class EI(object):
         self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca,marcas[0].lower())
 
 
-    def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca, modelo):
+    def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca, modelo, motor, preco, ano, km):
         template = OpenFiles("Swats/tarefa", self.date).generateFile()
 
         if marca != '':
@@ -148,6 +148,34 @@ class EI(object):
             template.write("\n")
         else:
             template.write("Modelo: N/I")
+            template.write("\n")
+
+        if preco != '':
+            template.write("Preco: " + preco)
+            template.write("\n")
+        else:
+            template.write("Preco: N/I")
+            template.write("\n")
+
+        if motor !='':
+            template.write("Motor: " +motor)
+            template.write("\n")
+        else:
+            template.write("Motor: N/I")
+            template.write("\n")
+
+        if motor !='':
+            template.write("Ano: " +ano)
+            template.write("\n")
+        else:
+            template.write("Ano: N/I")
+            template.write("\n")
+
+        if motor !='':
+            template.write("KM: " +km)
+            template.write("\n")
+        else:
+            template.write("KM: N/I")
             template.write("\n")
 
         if combustivel != '':
@@ -178,8 +206,12 @@ class EI(object):
             template.write("Cor: N/I")
             template.write("\n")
 
-        template.write("Ar: " + ar)
-        template.write("\n")
+        if ar !='':
+            template.write("Ar: " + ar)
+            template.write("\n")
+        else:
+            template.write("Ar: N/I")
+            template.write("\n")
 
         if opcionais:
             for op in opcionais:
@@ -231,6 +263,6 @@ class OpenFiles(object):
 if __name__ == "__main__":
         e = EI()
         h = e.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/563/hondacity20")
-        content  = e.parser(h)
-        # e.classify(content,"branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
-        print (content)
+        content = e.parser(h)
+        e.classify(content[0],"branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
+        print content[0]
