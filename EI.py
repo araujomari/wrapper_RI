@@ -48,7 +48,7 @@ class EI(object):
         data = text.split(';')
         tamanho = len(data)
         content_op = data[tamanho - 1]
-        conteudo = content_op.spli(',')
+        conteudo = content_op.split(',')
         v_opcionais = []
         v_combustivel = ''
         v_direcao = ''
@@ -196,13 +196,22 @@ class EI(object):
         return htmlfile.text
 
     def parser(self, html):
+        conteudo = []
+        caract = []
         parsed_html = BeautifulSoup(html, "lxml")
         content = parsed_html.body.find('h1', class_='titulo-detalhe-do-produto')
         content2 = parsed_html.body.find_all('h4', class_='caracteristicas-valor')
         preco = parsed_html.body.find('h4', class_='preco-produto-sidebar')
         caracteristicas = parsed_html.body.find_all('li', class_='listagem-mais-detalhes-do-produto-item')
         info_adicional = parsed_html.body.find_all('p')
-        return content
+
+        for x in content2:
+            conteudo.append(x.string)
+
+        for y in caracteristicas:
+            caract.append(y.text)
+
+        return content.string, conteudo, preco.string, caract, info_adicional[1].string
 
 class OpenFiles(object):
 
@@ -214,7 +223,7 @@ class OpenFiles(object):
     def generateFile(self):
 
         file_EI_create = self._file_name + "" + self._date + ".txt"
-        file_EI = open("../communication/"+file_EI_create, 'a')
+        file_EI = open("communication/"+file_EI_create, 'a')
         file_EI.write("\n\nPreenchimento do Template" + "(" + self._date + "):\n\n")
         return file_EI
 
@@ -223,4 +232,5 @@ if __name__ == "__main__":
         e = EI()
         h = e.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/563/hondacity20")
         content  = e.parser(h)
-        e.classify(content,"branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
+        # e.classify(content,"branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
+        print (content)
