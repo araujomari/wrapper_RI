@@ -13,7 +13,7 @@ class EI(object):
                             'Retrovisores el�tricos', 'volante com regulagem de altura']
         self._COMBUSTIVEL = ['g�s', 'gasolina', 'alcool', 'flex', 'total flex']
 
-        self.FORD = ['focus', 'new fiesta', 'fiesta se', 'ka']
+        self.FORD = ['focus','fiesta', 'new fiesta','new', 'fiesta se', 'ka']
 
         self._Volkswagen = ['gol','fox', 'crossfox', 'voyage']
 
@@ -42,7 +42,9 @@ class EI(object):
         self.date = time.strftime("%d-%m-%Y")
 
 
-    def classify(self, text):
+    def classify(self, text, content):
+
+        marca = content.split('')
         data = text.split(';')
         tamanho = len(data)
         content_op = data[tamanho - 1]
@@ -53,6 +55,16 @@ class EI(object):
         v_cambio = ''
         v_cor = ''
         v_ar = 'n�o'
+        v_marca = ''
+
+
+
+
+        for content in self._FORD:
+            if content != '' and content.lower() == marca[0].lower():
+                if content.lower() not in v_opcionais:
+                    v_marca = content.lower())
+        
 
         for opcionais in data:
             for content in self._OPICIONAIS:
