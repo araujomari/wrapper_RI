@@ -9,9 +9,9 @@ class EI(object):
 
     def __init__(self):
         self._OPICIONAIS = ['radio','CD', 'MP3 Player','MP3','alarme', 'airbag','dir.e','rodas liga','rodas liga leve','liga leve', 'vid'
-            ,'sensor de ré','sensor de estacionamento', 'revestimento fumê', 'bancos de couro',
-                            'Retrovisores elétricos', 'volante com regulagem de altura']
-        self._COMBUSTIVEL = ['gás', 'gasolina', 'alcool', 'flex', 'total flex']
+            ,'sensor de rï¿½','sensor de estacionamento', 'revestimento fumï¿½', 'bancos de couro',
+                            'Retrovisores elï¿½tricos', 'volante com regulagem de altura']
+        self._COMBUSTIVEL = ['gï¿½s', 'gasolina', 'alcool', 'flex', 'total flex']
 
         self.FORD = ['focus', 'new fiesta', 'fiesta se', 'ka']
 
@@ -31,9 +31,9 @@ class EI(object):
 
         self._Renault = ['duster']
 
-        self._DIRECAO = ['hidraulica', 'direção hidraulica', 'hla', 'direção elétrica', 'elétrica']
+        self._DIRECAO = ['hidraulica', 'direï¿½ï¿½o hidraulica', 'hla', 'direï¿½ï¿½o elï¿½trica', 'elï¿½trica']
 
-        self._CAMBIO = ['Manual', 'automático', 'automática']
+        self._CAMBIO = ['Manual', 'automï¿½tico', 'automï¿½tica']
 
         self._COR = ['branco','preto', 'prata', 'azul', 'marrom', 'vermelho', 'amarelo', 'cinza']
 
@@ -43,13 +43,16 @@ class EI(object):
 
 
     def classify(self, text):
-        data = text.split(',')
+        data = text.split(';')
+        tamanho = len(data)
+        content_op = data[tamanho - 1]
+        conteudo = content_op.spli(',')
         v_opcionais = []
         v_combustivel = ''
         v_direcao = ''
         v_cambio = ''
         v_cor = ''
-        v_ar = 'não'
+        v_ar = 'nï¿½o'
 
         for opcionais in data:
             for content in self._OPICIONAIS:
@@ -99,10 +102,10 @@ class EI(object):
             template.write("\n")
 
         if direcao != '':
-            template.write("Direção: " + direcao)
+            template.write("Direï¿½ï¿½o: " + direcao)
             template.write("\n")
         else:
-            template.write("Direção: N/I")
+            template.write("Direï¿½ï¿½o: N/I")
             template.write("\n")
 
         if cor != '':
@@ -154,4 +157,4 @@ class OpenFiles(object):
 
 
 if __name__ == "__main__":
-    EI().classify("branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
+    EI().classify("branco,flex, hatch, completo,sensor de rï¿½, 4 pneus novos, 76.000 kms. R$ 35.900,00")
