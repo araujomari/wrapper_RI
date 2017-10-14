@@ -4,16 +4,21 @@
 import time
 import requests
 from bs4 import BeautifulSoup
+import numpy as np
+
 
 class EI(object):
 
     def __init__(self):
         self._OPICIONAIS = ['radio','CD', 'MP3 Player','MP3','alarme', 'airbag','dir.e','rodas liga','rodas liga leve','liga leve', 'vid'
-            ,'sensor de ré','sensor de estacionamento', 'revestimento fumê', 'bancos de couro',
-                            'Retrovisores elétricos', 'volante com regulagem de altura']
+            ,'sensor de ré','sensor de estacionamento', 'revestimento fumê', 'bancos de couro','Com revestimento fumê ',
+                            'Retrovisores elétricos', 'volante com regulagem de altura', 'banco traseiro bi-partido',
+                            'limpador traseiro','desembacador traseiro','encosto de cabeça', 'revestimento fumê!','banco traseiro com encosto de cabeça',
+                            'controle de som', 'telefone no volante', 'sensor de estacionamento']
+
         self._COMBUSTIVEL = ['gás', 'gasolina', 'alcool', 'flex', 'total flex']
 
-        self._MODELS = ['ford','volkswagen','hyundai','chevrolet','fiat','honda','nissan','toyota','renault']
+        self._MODELS = ['ford', 'volkswagen', 'hyundai', 'chevrolet', 'fiat', 'honda', 'nissan', 'toyota', 'renault']
 
         self._FORD = ['focus', 'new fiesta', 'new', 'fiesta', 'fiesta se', 'ka', 'ford']
 
@@ -23,13 +28,13 @@ class EI(object):
 
         self._Chevrolet = ['montana', 'agile', 'chevrolet']
 
-        self._Fiat = ['fiat','strada', 'palio','siena', 'idea', 'uno']
+        self._Fiat = ['strada', 'palio','siena', 'idea', 'uno', 'fiat']
 
         self._Honda = ['civic', 'city', 'honda']
 
         self._Nissan = ['versa', 'nissan']
 
-        self._Toyota = ['corola', 'toyota']
+        self._Toyota = ['corolla', 'toyota']
 
         self._Renault = ['duster', 'renault']
 
@@ -39,37 +44,30 @@ class EI(object):
 
         self._COR = ['branco','preto', 'prata', 'azul', 'marrom', 'vermelho', 'amarelo', 'cinza']
 
-        self._AR = ['ar', 'ar_condi', 'ar_condicionado']
-
-        self._KM = []
-
-        self._ANO = []
-
-        self._MOTOR = []
-
-        self._PRECO = []
+        self._AR = ['ar', 'ar_condi', 'ar_condicionado', 'ar condicionado digital','ar condicionado']
 
         self.date = time.strftime("%d-%m-%Y")
 
 
-    def classify(self, content, text):
+    def classify(self, content, text, caract, conteudo, preco):
 
         marcas = content.split(" ")
-        data = text.split(';')
-        tamanho = len(data)
-        content_op = data[tamanho - 1]
-        conteudo = content_op.split(',')
+        verb_lig = ''
+        datas = text.split(';')
+        tamanho = len(datas)
+        content_op = datas[tamanho - 1]
+        data = content_op.split(', ')
+        for i in data:
+            verb_lig = i.split(" e ")
+        data = np.concatenate((data, caract), axis=0)
+        data = np.concatenate((data, verb_lig), axis=0)
         v_opcionais = []
-        v_combustivel = ''
+        v_combustivel = datas[0]
         v_direcao = ''
-        v_cambio = ''
+        v_cambio = conteudo[3].encode(encoding='UTF-8', errors='strict').lower()
         v_cor = ''
         v_ar = 'não'
         v_marca = ''
-        v_motor = ''
-        v_preco = '' 
-        v_ano = ''
-        v_km = ''
 
 
         for content in self._FORD:
@@ -119,93 +117,75 @@ class EI(object):
 
         for opcionais in data:
             for content in self._OPICIONAIS:
-                if content != '' and content.lower() == opcionais.lower():
+                if content != '' and content.lower() == opcionais.encode(encoding='UTF-8', errors='strict').lower():
                     if content.lower() not in v_opcionais:
                         v_opcionais.append(content.lower())
 
-        for combustivel in data:
-            for content in self._COMBUSTIVEL:
-                if content != '' and content.lower() == combustivel.lower():
-                    v_combustivel = content.lower()
 
         for direcao in data:
             for content in self._DIRECAO:
-                if content != '' and content.lower() == direcao.lower():
+                if content != '' and content.lower() == direcao.encode(encoding='UTF-8', errors='strict').lower():
                     v_direcao = content.lower()
+
 
         for cor in data:
             for content in self._COR:
                 if content != '' and content.lower() == cor.lower():
                     v_cor = content.lower()
 
-        for motor in data:
-            for content in self._MOTOR:
-                if content != '' and content.lower() == motor.lower():
-                    v_motor = content.lower()
+        for ar in data:
+            for content in self._AR:
+                if content != '' and content.lower() == ar.encode(encoding='UTF-8', errors='strict').lower():
+                    v_ar = 'sim'
 
-        for preco in data:
-            for content in self._PRECO:
-                if content != '' and content.lower() == preco.lower():
-                    v_preco = content.lower()
-		
-		for ano in data:
-		    for content in self._ANO:
-		        if content != '' and content.lower() == ano.lower():
-		            v_ano = content.lower()
-		
-		for km in data:
-		    for content in self._KM:
-		        if content != '' and content.lower() == km.lower():
-		            v_km = content.lower()
-
-        v_model = ''            
+        v_model = ''
         for content in self._MODELS:
-	        if v_marca.lower() == content.lower():
-	            v_model = marcas[1].lower()
-	        else:
-	        	v_model = marcas[0].lower()
-	        	
-	        	for item in self._Fiat:
-	        		if v_marca.lower() == item.lower():
-	        			v_marca = 'fiat'
-	        			
-	        	for item in self._FORD:
-	        		if v_marca.lower() == item.lower():
-	        			v_marca = 'ford'
-	        
-		        for item in self._Honda:
-		        		if v_marca.lower() == item.lower():
-		        			v_marca = 'honda'
-		    
-		        for item in self._Hyundai:
-		        		if v_marca.lower() == item.lower():
-		        			v_marca = 'hyundai'
-		    
-		        for item in self._Chevrolet:
-		        		if v_marca.lower() == item.lower():
-		        			v_marca = 'chevrolet'
-		    
-		        for item in self._Volkswagen:
-		        		if v_marca.lower() == item.lower():
-		        			v_marca = 'volkswagen'
-		    
-		        for item in self._Toyota:
-		        		if v_marca.lower() == item.lower():
-		        			v_marca = 'toyota'
-		    
-		        for item in self._Nissan:
-		        		if v_marca.lower() == item.lower():
-		        			v_marca = 'nissan'
-		    
-		        for item in self._Renault:
-		        		if v_marca.lower() == item.lower():
-		        			v_marca = 'renault'
+            if v_marca.lower() == content.lower():
+                v_model = marcas[1].lower()
+            else:
+                v_model = marcas[0].lower()
 
+                for item in self._Fiat:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'fiat'
 
-        self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca, v_model, v_motor, v_preco, v_ano, v_km)
+                for item in self._FORD:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'ford'
 
+                for item in self._Honda:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'honda'
 
-    def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca, modelo, motor, preco, ano, km):
+                for item in self._Hyundai:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'hyundai'
+
+                for item in self._Chevrolet:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'chevrolet'
+
+                for item in self._Volkswagen:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'volkswagen'
+
+                for item in self._Toyota:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'toyota'
+
+                for item in self._Nissan:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'nissan'
+
+                for item in self._Renault:
+                    if v_marca.lower() == item.lower():
+                        v_marca = 'renault'
+
+        self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca, v_model, conteudo[2].encode(encoding='UTF-8', errors='strict').lower(), preco,
+                                conteudo[0].encode(encoding='UTF-8', errors='strict').lower(),conteudo[1].encode(encoding='UTF-8', errors='strict').lower())
+
+    def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca, modelo, motor, preco, ano,
+                           km):
         template = OpenFiles("Swats/tarefa", self.date).generateFile()
 
         if marca != '':
@@ -223,28 +203,28 @@ class EI(object):
             template.write("\n")
 
         if preco != '':
-            template.write("Preco: " + preco)
+            template.write("Preco: " + preco.strip())
             template.write("\n")
         else:
             template.write("Preco: N/I")
             template.write("\n")
 
-        if motor !='':
-            template.write("Motor: " +motor)
+        if motor != '':
+            template.write("Motor: " + motor)
             template.write("\n")
         else:
             template.write("Motor: N/I")
             template.write("\n")
 
-        if motor !='':
-            template.write("Ano: " +ano)
+        if motor != '':
+            template.write("Ano: " + ano)
             template.write("\n")
         else:
             template.write("Ano: N/I")
             template.write("\n")
 
-        if motor !='':
-            template.write("KM: " +km)
+        if motor != '':
+            template.write("KM: " + km)
             template.write("\n")
         else:
             template.write("KM: N/I")
@@ -278,16 +258,14 @@ class EI(object):
             template.write("Cor: N/I")
             template.write("\n")
 
-        if ar !='':
-            template.write("Ar: " + ar)
-            template.write("\n")
-        else:
-            template.write("Ar: N/I")
-            template.write("\n")
+
+        template.write("Ar: " + ar)
+        template.write("\n")
 
         if opcionais:
+            template.write("Opcionais: ")
             for op in opcionais:
-                template.write ("Opcionais: " + op + ",")
+                template.write(op + ", ")
 
             template.write ("\n")
         else:
@@ -300,15 +278,16 @@ class EI(object):
         return htmlfile.text
 
     def parser(self, html):
+
         conteudo = []
         caract = []
+
         parsed_html = BeautifulSoup(html, "lxml")
         content = parsed_html.body.find('h1', class_='titulo-detalhe-do-produto')
         content2 = parsed_html.body.find_all('h4', class_='caracteristicas-valor')
         preco = parsed_html.body.find('h4', class_='preco-produto-sidebar')
         caracteristicas = parsed_html.body.find_all('li', class_='listagem-mais-detalhes-do-produto-item')
         info_adicional = parsed_html.body.find_all('p')
-
         for x in content2:
             conteudo.append(x.string)
 
@@ -327,14 +306,13 @@ class OpenFiles(object):
     def generateFile(self):
 
         file_EI_create = self._file_name + "" + self._date + ".txt"
-        file_EI = open("communication/"+file_EI_create, 'a')
+        file_EI = open("../communication/"+file_EI_create, 'a')
         file_EI.write("\n\nPreenchimento do Template" + "(" + self._date + "):\n\n")
         return file_EI
 
 
 if __name__ == "__main__":
         e = EI()
-        h = e.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/514/")
-        content = e.parser(h)
-        e.classify(content[0],"branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
-        print content[0]
+        h = e.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/557/toyotacorolla18")
+        content  = e.parser(h)
+        e.classify(content[0],content[4], content[3],content[1],content[2])
