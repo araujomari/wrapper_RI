@@ -21,11 +21,11 @@ class EI(object):
 
         self._Chevrolet = ['montana', 'agile']
 
-        self._Fiat = ['strada', 'palio','siena', 'idea', 'uno']
+        self._Fiat = ['fiat','strada', 'palio','siena', 'idea', 'uno']
 
         self._Honda = ['civic', 'city']
 
-        self._Nissan = ['versa']
+        self._Nissan = ['nissan','versa']
 
         self._Toyota = ['corola']
 
@@ -130,7 +130,11 @@ class EI(object):
                 if content != '' and content.lower() == ar.lower():
                     v_ar = 'sim'
 
-        self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca,marcas[0].lower())
+        model = ''            
+        if v_marca.lower() == marcas[0].lower():
+            model = marcas[1].lower()
+
+        self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor, v_marca,model)
 
 
     def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca, modelo):
