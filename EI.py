@@ -133,7 +133,7 @@ class EI(object):
         self.preencher_template(v_ar, v_opcionais, v_combustivel, v_direcao, v_cambio, v_cor)
 
 
-    def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor,marcar, modelo,preco,motor,ano,km):
+    def preencher_template(self, ar, opcionais, combustivel, direcao, cambio, cor, marca):
         template = OpenFiles("Swats/tarefa", self.date).generateFile()
 
         if combustivel != '':
@@ -175,6 +175,13 @@ class EI(object):
         else:
             template.write("Opcionais: N/I")
 
+        if marca != '':
+            template.write("Marca: " + marca)
+            template.write("\n")
+        else:
+            template.write("Marca: N/I")
+            template.write("\n")
+
     def get_page(self, url):
         htmlfile = requests.get(url)
         return htmlfile.text
@@ -204,4 +211,6 @@ class OpenFiles(object):
 
 
 if __name__ == "__main__":
-    EI().classify("branco,flex, hatch, completo,sensor de ré, 4 pneus novos, 76.000 kms. R$ 35.900,00")
+        h = w.get_page("http://classificados.jconline.ne10.uol.com.br/autos/ofertas/ad/563/hondacity20")
+        EI().parser(h)
+
