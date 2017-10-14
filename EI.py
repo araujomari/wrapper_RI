@@ -59,47 +59,47 @@ class EI(object):
 
 
         for content in self._FORD:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower()
 
         for content in self._Volkswagen:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower()            
 
         for content in self._Hyundai:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower()  
         
         for content in self._Chevrolet:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower()  
 
         for content in self._Fiat:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower()  
 
         for content in self._Honda:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower()  
 
         for content in self._Nissan:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower()  
 
         for content in self._Toyota:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower()              
 
         for content in self._Renault:
-            if content != '' and content.lower() == marca[0].lower():
+            if content != '' and content.lower() == marcas[0].lower():
                 if content.lower() not in v_marca:
                     v_marca = content.lower() 
                     
